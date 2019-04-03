@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import PostForm from './PostForm';
+import Comments from './Comments';
 
 class BlogPost extends Component {
     constructor(props) {
@@ -11,6 +12,7 @@ class BlogPost extends Component {
         this.toggleEdit = this.toggleEdit.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
+        this.handleDeleteComment = this.handleDeleteComment.bind(this);
     }
 
     toggleEdit() {
@@ -30,6 +32,12 @@ class BlogPost extends Component {
         this.props.triggerDelete(this.props.data.postId);
         this.props.history.push('/');
     }
+
+    handleDeleteComment(commentId) {
+        let updatedComments = this.props.data.comments.filter(c => c.id !== commentId);
+        let updatedPost = {...this.props.data, comments: updatedComments}
+        this.props.triggerDeleteComment(updatedPost);
+    }
     
     render() {
         if(this.props.data === undefined ) return <Redirect to={this.props.cantFind} />;
@@ -44,6 +52,7 @@ class BlogPost extends Component {
                         <p>{this.props.data.body}</p>
                         <button onClick={ this.toggleEdit }>Edit</button>
                         <button onClick={ this.handleDelete }>Delete</button>
+                        <Comments comments={this.props.data.comments} triggerDeleteComment={this.handleDeleteComment }/>
                     </>
                 }
                 

@@ -10,16 +10,23 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state={
-      posts: [{
-        title: "Title",
-        description: "Description",
-        body: "body",
-        postId: 0 // DO NOT FORGET
-      }]
+      posts: [
+        {
+          title: "Title",
+          description: "Description",
+          body: "body",
+          postId: 0,
+          comments: [
+            {id:uuid(),text:"HAHAHAHA"}, 
+            {id:uuid(),text:"MEow"}
+          ]
+        }
+    ]
     }
     this.addPost = this.addPost.bind(this);
     this.editPost = this.editPost.bind(this);
     this.deletePost = this.deletePost.bind(this);
+    this.deleteComment = this.deleteComment.bind(this);
   }
 
   addPost(postDataObj) {
@@ -40,11 +47,17 @@ class App extends Component {
     this.setState({posts: filteredPosts})
   }
 
+  deleteComment(updatedPost){
+    let filteredPosts = this.state.posts.filter(p => p.postId !== updatedPost.postId);
+    let currPosts = [...filteredPosts, updatedPost]
+    this.setState({posts: currPosts})
+  }
+
   render() {
     return (
       <div className="App">
         <NavBar />
-        <Routes triggerAdd={this.addPost} triggerDelete={ this.deletePost } triggerEdit={ this.editPost } posts={this.state.posts}/>
+        <Routes triggerAdd={this.addPost} triggerDelete={ this.deletePost } triggerEdit={ this.editPost } posts={this.state.posts} triggerDeleteComment={ this.deleteComment }/>
       </div>
     );
   }
