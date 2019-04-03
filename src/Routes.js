@@ -5,6 +5,18 @@ import NewPostForm from './NewPostForm';
 import BlogPost from './BlogPost';
 
 class Routes extends Component {
+
+  constructor(props) {
+    super(props);
+    this.findOnePost=this.findOnePost.bind(this);
+  }
+
+  findOnePost(id) {
+    const currPost = this.props.posts.filter((p) => p.postId===id)[0];
+
+    return currPost;
+  }
+
   render() {
     return (
         <Switch>
@@ -22,7 +34,9 @@ class Routes extends Component {
           <Route 
             exact
             path="/:postId"
-            render={ (rtProps) => <BlogPost id={rtProps.match.params.postId} /> }
+            render={ (rtProps) => <BlogPost 
+              cantFind="/"
+              data={this.findOnePost(rtProps.match.params.postId)} /> }
           />
           <Redirect to="/" />
         </Switch>
