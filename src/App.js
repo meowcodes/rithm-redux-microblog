@@ -47,12 +47,6 @@ class App extends Component {
     this.setState({posts: filteredPosts})
   }
 
-  deleteComment(updatedPost){
-    let filteredPosts = this.state.posts.filter(p => p.postId !== updatedPost.postId);
-    let currPosts = [...filteredPosts, updatedPost]
-    this.setState({posts: currPosts})
-  }
-
   render() {
     return (
       <div className="App">
