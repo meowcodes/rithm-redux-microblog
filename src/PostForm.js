@@ -24,7 +24,7 @@ class PostForm extends Component {
         evt.preventDefault();
         if(this.props.data){
             console.log("EDITNG")
-            const editedData = {...this.state, postId: this.props.data.postId }
+            const editedData = {...this.state, postId: this.props.data.postId, comments: this.props.data.comments }
             this.props.triggerEdit(editedData);
         }else {
             console.log("NEWING")

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import uuid from 'uuid/v4';
 import PostForm from './PostForm';
 import Comments from './Comments';
 
@@ -13,6 +14,7 @@ class BlogPost extends Component {
         this.handleEdit = this.handleEdit.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.handleDeleteComment = this.handleDeleteComment.bind(this);
+        this.handleAddComment = this.handleAddComment.bind(this);
     }
 
     toggleEdit() {
@@ -22,10 +24,11 @@ class BlogPost extends Component {
         })
     }
     
-    handleEdit(editedData) {
-        console.log("IN HANDLE EDIT", editedData);
+    handleEdit(editedData, toggle=true) {
         this.props.triggerEdit(editedData);
-        this.toggleEdit();
+        if(toggle){
+            this.toggleEdit();
+        }
     }
 
     handleDelete() {
@@ -36,7 +39,13 @@ class BlogPost extends Component {
     handleDeleteComment(commentId) {
         let updatedComments = this.props.data.comments.filter(c => c.id !== commentId);
         let updatedPost = {...this.props.data, comments: updatedComments}
-        this.props.triggerDeleteComment(updatedPost);
+        this.handleEdit(updatedPost, false);
+    }
+
+    handleAddComment(commentText) {
+        let updatedComments = [...this.props.data.comments, {id: uuid(), "text": commentText}]
+        let updatedPost = {...this.props.data, comments: updatedComments}
+        this.handleEdit(updatedPost, false);
     }
     
     render() {

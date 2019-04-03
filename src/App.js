@@ -57,7 +57,7 @@ class App extends Component {
     return (
       <div className="App">
         <NavBar />
-        <Routes triggerAdd={this.addPost} triggerDelete={ this.deletePost } triggerEdit={ this.editPost } posts={this.state.posts} triggerDeleteComment={ this.deleteComment }/>
+        <Routes triggerAdd={this.addPost} triggerDelete={ this.deletePost } triggerEdit={ this.editPost } posts={this.state.posts} />
       </div>
     );
   }

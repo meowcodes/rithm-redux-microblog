@@ -40,7 +40,6 @@ class Routes extends Component {
               data={this.findOnePost(rtProps.match.params.postId)} 
               triggerDelete={ this.props.triggerDelete }
               triggerEdit={ this.props.triggerEdit }
-              triggerDeleteComment = { this.props.triggerDeleteComment }
             /> }
           />
           <Redirect to="/" />

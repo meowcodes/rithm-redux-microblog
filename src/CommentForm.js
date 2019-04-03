@@ -21,8 +21,10 @@ class CommentForm extends Component {
 
     handleSubmit(evt) {
         evt.preventDefault();
-
-        this.props.triggerAddComment(this.state)
+        this.props.triggerAddComment(this.state.text);
+        this.setState({
+            text: ""
+        })
     }
 
 
