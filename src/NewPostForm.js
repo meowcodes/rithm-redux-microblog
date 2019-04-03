@@ -1,7 +1,31 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 class NewPostForm extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state={
+            title: "",
+            description: "",
+            body: "",
+        }
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(evt) {
+        this.setState({
+            [evt.target.name]: evt.target.value
+        })
+    }
+
+    handleSubmit(evt) {
+        evt.preventDefault();
+        this.props.triggerAdd(this.state);
+        this.props.history.push('/')
+    }
+
     render() {
         return (
             <div className="NewPostForm">

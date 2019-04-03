@@ -11,12 +11,13 @@ class Routes extends Component {
           <Route 
             exact
             path="/"
-            render={ () => <Microblog /> }
+            render={ () => <Microblog  posts={this.props.posts}/> }
           />
           <Route 
             exact
             path="/new"
-            render={ () => <NewPostForm /> }
+            render={ (rtProps) => <NewPostForm history={rtProps.history}
+              triggerAdd={this.props.triggerAdd}/> }
           />
           <Route 
             exact

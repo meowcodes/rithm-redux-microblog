@@ -1,0 +1,5 @@
+.PostCard {
+    border: solid 1px gainsboro;
+    max-width: 350px;
+    margin: 0 auto;
+}
