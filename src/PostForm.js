@@ -28,7 +28,7 @@ class PostForm extends Component {
             this.props.triggerEdit(editedData);
         }else {
             console.log("NEWING")
-            this.props.triggerAdd(this.state);
+            this.props.triggerAdd({...this.state, comments: []});
             this.props.history.push('/');
         }
     }

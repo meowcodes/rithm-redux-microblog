@@ -52,7 +52,8 @@ class BlogPost extends Component {
                         <p>{this.props.data.body}</p>
                         <button onClick={ this.toggleEdit }>Edit</button>
                         <button onClick={ this.handleDelete }>Delete</button>
-                        <Comments comments={this.props.data.comments} triggerDeleteComment={this.handleDeleteComment }/>
+                        <Comments comments={this.props.data.comments} 
+                        triggerAddComment={this.handleAddComment}triggerDeleteComment={this.handleDeleteComment }/>
                     </>
                 }
                 
