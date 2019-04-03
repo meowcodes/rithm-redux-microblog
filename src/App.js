@@ -18,6 +18,8 @@ class App extends Component {
       }]
     }
     this.addPost = this.addPost.bind(this);
+    this.editPost = this.editPost.bind(this);
+    this.deletePost = this.deletePost.bind(this);
   }
 
   addPost(postDataObj) {
@@ -26,11 +28,23 @@ class App extends Component {
     this.setState({posts: currPosts})
   }
 
+  editPost(postDataObj) {
+    console.log("IN EDIT", postDataObj)
+    let filteredPosts = this.state.posts.filter(p => p.postId !== postDataObj.postId);
+    let currPosts = [...filteredPosts, postDataObj]
+    this.setState({posts: currPosts})
+  }
+
+  deletePost(id) {
+    let filteredPosts = this.state.posts.filter(p => p.postId !== id);
+    this.setState({posts: filteredPosts})
+  }
+
   render() {
     return (
       <div className="App">
         <NavBar />
-        <Routes triggerAdd={this.addPost} posts={this.state.posts}/>
+        <Routes triggerAdd={this.addPost} triggerDelete={ this.deletePost } triggerEdit={ this.editPost } posts={this.state.posts}/>
       </div>
     );
   }
