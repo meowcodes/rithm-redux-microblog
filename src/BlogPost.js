@@ -71,4 +71,15 @@ class BlogPost extends Component {
     }
 }
 
-export default BlogPost;
+
+function mapStateToProps(reduxState) {
+    return { posts: reduxState.posts };
+  }
+  
+  const mapDispatchToProps = {
+    addComment,
+    deleteComment
+  
+  }
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(BlogPost);

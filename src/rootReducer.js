@@ -1,7 +1,7 @@
 import uuid from 'uuid/v4';
 import { ADD_POST, EDIT_POST, DELETE_POST, ADD_COMMENT, DELETE_COMMENT } from './actionTypes';
 
-const INITIAL_STATE = { posts: [] };
+const INITIAL_STATE = { posts: {} };
 
 
 function rootReducer(state = INITIAL_STATE, action) {
