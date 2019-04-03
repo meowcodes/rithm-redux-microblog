@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PostCard from './PostCard'
+import PostList from './PostList';
 
 class Microblog extends Component {
     static defaultProps = {
@@ -12,25 +12,14 @@ class Microblog extends Component {
     }
 
     render() {
-        const postCards = this.props.posts.map((p) => <PostCard 
-            title={p.title} 
-            key={p.postId}
-            postId={p.postId}
-            description={p.description} />)
-
-
         return (
             <div className="Microblog">
                 <p>Welcome to Microblog, our innovative site 
                     for communicating on the information superhighway</p>
-                {postCards}
+                <PostList posts={ this.props.posts } />
             </div>
         );
     }
 }
 
 export default Microblog;
-
-
-// Add funcs for post 
-// add post cards
