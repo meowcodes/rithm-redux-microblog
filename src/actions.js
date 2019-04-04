@@ -43,10 +43,22 @@ export function gotPost(post) {
 	}
 }
 
-export function addPost(postDataObj) {
+export function addPostToApi(postData) {
+	return async function (dispatch) {
+		try {
+			const post = await microblogApi.addPost(postData);
+			dispatch(addedPost(post));
+		} catch(err) {
+			const errMsg = err.response.data;
+			dispatch(showErr(errMsg));
+		}
+	}
+}
+
+export function addedPost(newPost) {
 	return {
 		type: ADD_POST,
-		payload: {...postDataObj}
+		payload: { post: newPost }
 	}
 }
 

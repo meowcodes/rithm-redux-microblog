@@ -19,9 +19,7 @@ function rootReducer(state = INITIAL_STATE, action) {
       return {...state, post: {...action.payload.post}}
 
     case ADD_POST:
-      const addedPosts = {...state.posts, [postData.newId]: postData};
-
-      return { posts: addedPosts }
+      return {...state, post: {...action.payload.post}}
 
     case EDIT_POST:
       return editPost(state, postData.postId, postData.data );
