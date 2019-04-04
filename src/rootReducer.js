@@ -1,4 +1,3 @@
-import microblogApi from './microblogApi';
 import { GET_TITLES, GET_POST, ADD_POST, EDIT_POST, DELETE_POST, GET_COMMENTS, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT } from './actionTypes';
 
 
@@ -10,10 +9,12 @@ const INITIAL_STATE = { posts: {} };
  */
 function rootReducer(state = INITIAL_STATE, action) {
   // not repeating action.payload ; 
-  const postData = action.payload? action.payload : {};
+  // const postData = action.payload? action.payload : {};
 
   switch(action.type){
     case GET_TITLES:
+      return {...state, titles: {...action.payload}}
+
 
     case ADD_POST:
       const addedPosts = {...state.posts, [postData.newId]: postData};

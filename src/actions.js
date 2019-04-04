@@ -1,11 +1,26 @@
-import { GET_TITLES, GET_POST, ADD_POST, EDIT_POST, DELETE_POST, GET_COMMENTS, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT } from './actionTypes';
+import microblogApi from './microblogApi';
+import { GET_TITLES, GET_POST, ADD_POST, EDIT_POST, DELETE_POST, GET_COMMENTS, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, SHOW_ERR } from './actionTypes';
 
 /** 
  * Format data to be sent to the reducer
 */
-export function getTitles() {
+
+export function getTitlesFromApi() {
+	return async function (dispatch) {
+		try {
+			const titles = await microblogApi.getTitles();
+			dispatch(gotTitles(titles));
+		} catch(err) {
+			const errMsg = err.response.data;
+			dispatch(showErr(errMsg));
+		}
+	}
+}
+
+export function gotTitles(titles) {
 	return {
-		type: GET_TITLES
+		type: GET_TITLES,
+		payload: {...titles}
 	}
 }
 
@@ -60,5 +75,12 @@ export function deleteComment(postId, commentId) {
 	return {
 		type: DELETE_COMMENT,
 		payload: { postId, commentId }
+	}
+}
+
+export function showErr(errMsg) {
+	return {
+		type: SHOW_ERR,
+		payload: { message: errMsg}
 	}
 }
