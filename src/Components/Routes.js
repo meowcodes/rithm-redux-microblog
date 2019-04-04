@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Microblog from './Microblog';
-import AddPost from './AddPost';
-import BlogPost from './BlogPost';
+import AddPost from '../Containers/AddPost';
+import BlogPost from '../Containers/BlogPost';
 
 /**
  * Routes to home (Microblog), new post form (AddPost), and indv posts (BlogPost)
@@ -12,7 +12,7 @@ class Routes extends Component {
   render() {
     return (
       <Switch>
-        
+
         <Route
           exact
           path="/"

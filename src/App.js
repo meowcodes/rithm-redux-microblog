@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import NavBar from './NavBar';
-import Routes from './Routes';
+import NavBar from './Components/NavBar';
+import Routes from './Components/Routes';
 import './App.css';
 
 /**

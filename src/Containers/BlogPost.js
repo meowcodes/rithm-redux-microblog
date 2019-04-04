@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { deletePost, addComment, deleteComment } from './actions';
+import { deletePost, addComment, deleteComment } from '../actions';
 
 import EditPost from './EditPost';
-import Comments from './Comments';
+import Comments from '../Components/Comments';
 
 /**
  * Receives history and postId from Route

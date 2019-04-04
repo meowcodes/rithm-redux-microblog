@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { editPost } from './actions';
-import PostForm from './PostForm';
+import { editPost } from '../actions';
+import PostForm from '../Components/PostForm';
 
 /**
  * Receives postId and toggleEdit function from BlogPost

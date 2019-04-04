@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addPost } from './actions';
-import PostForm from './PostForm';
+import { addPost } from '../actions';
+import PostForm from '../Components/PostForm';
 
 /**
  * Receives history from Route

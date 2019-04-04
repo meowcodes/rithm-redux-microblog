@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PostCard from './PostCard';
+import PostCard from '../Components/PostCard';
 
 /**
  * Recieves all posts data from Redux store
