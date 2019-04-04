@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { deletePost, addComment, deleteComment } from './actions';
 
-import PostForm from './PostForm';
+import EditPost from './EditPost';
 import Comments from './Comments';
 
 class BlogPost extends Component {
@@ -27,16 +27,16 @@ class BlogPost extends Component {
     }
 
     handleDelete() {
-        this.props.deletePost(this.props.id);
+        this.props.deletePost(this.props.postId);
         this.props.history.push('/');
     }
     
     handleAddComment(commentText) {
-        this.props.addComment(this.props.id, commentText);
+        this.props.addComment(this.props.postId, commentText);
     }
 
     handleDeleteComment(commentId) {
-        this.props.deleteComment(this.props.id, commentId);
+        this.props.deleteComment(this.props.postId, commentId);
     }
 
     render() {
@@ -45,7 +45,10 @@ class BlogPost extends Component {
         return (
             <div className="BlogPost" >
                 {this.state.edit
-                    ? <PostForm history={this.props.history} id={this.props.id} toggleEdit={ this.toggleEdit }/>
+                    ? <EditPost
+                        triggerToggleEdit={ this.toggleEdit } 
+                        postId={ this.props.postId } 
+                        edit={ true }/>
                     : <>
                         <h3>{this.props.post.title}</h3>
                         <p><i>{this.props.post.description}</i></p>
@@ -64,8 +67,8 @@ class BlogPost extends Component {
 
 
 function mapStateToProps(reduxState, ownProps) {
-    if(ownProps.id){
-        const id = ownProps.id;
+    if(ownProps.postId){
+        const id = ownProps.postId;
         const post = reduxState.posts[id];
         return { post: post };
     }else {

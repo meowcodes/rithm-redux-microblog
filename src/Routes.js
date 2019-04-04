@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Microblog from './Microblog';
-import PostForm from './PostForm';
+import AddPost from './AddPost';
 import BlogPost from './BlogPost';
 
 class Routes extends Component {
@@ -17,7 +17,9 @@ class Routes extends Component {
           <Route 
             exact
             path="/new"
-            render={ (rtProps) => <PostForm history={rtProps.history} />}
+            render={ (rtProps) => <AddPost 
+              history={rtProps.history}
+            />}
           />
           <Route 
             exact
@@ -25,7 +27,7 @@ class Routes extends Component {
             render={ (rtProps) => <BlogPost 
               cantFind="/"
               history={rtProps.history}
-              id={rtProps.match.params.postId}
+              postId={rtProps.match.params.postId}
             /> }
           />
           <Redirect to="/" />
