@@ -47,6 +47,8 @@ export function addPostToApi(postData) {
 	return async function (dispatch) {
 		try {
 			const post = await microblogApi.addPost(postData);
+			// add an empty comments to post
+			post.comments = [];
 			dispatch(addedPost(post));
 		} catch(err) {
 			const errMsg = err.response.data;
@@ -62,14 +64,39 @@ export function addedPost(newPost) {
 	}
 }
 
-export function editPost(postId, postDataObj) {
-	return {
-		type: EDIT_POST,
-		payload: { postId, data: postDataObj }
+export function editPostFromApi(postId, postData) {
+	return async function (dispatch) {
+		try {
+			const post = await microblogApi.editPost(postId, postData);
+			dispatch(editedPost(postId, post));
+		} catch(err) {
+			const errMsg = err.response.data;
+			dispatch(showErr(errMsg));
+		}
 	}
 }
 
-export function deletePost(postId) {
+export function editedPost(postId, updatedPost) {
+	return {
+		type: EDIT_POST,
+		payload: { postId, post: updatedPost }
+	}
+}
+
+export function deletePostFromApi(postId) {
+	return async function (dispatch) {
+		try {
+			const post = await microblogApi.deletePost(postId);
+			dispatch(deletedPost(post));
+			getTitlesFromApi();
+		} catch(err) {
+			const errMsg = err.response.data;
+			dispatch(showErr(errMsg));
+		}
+	}
+}
+
+export function deletedPost(postId) {
 	return {
 		type: DELETE_POST,
 		payload: { postId }

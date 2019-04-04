@@ -1,7 +1,7 @@
 import { GET_TITLES, GET_POST, ADD_POST, EDIT_POST, DELETE_POST, GET_COMMENTS, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT } from './actionTypes';
 
 
-const INITIAL_STATE = { titles: [], post: {} };
+const INITIAL_STATE = { titles: [], posts: {} };
 
 /**
  * Receives state/action through action creators
@@ -13,16 +13,21 @@ function rootReducer(state = INITIAL_STATE, action) {
 
   switch(action.type){
     case GET_TITLES:
-      return {...state, titles: [...action.payload.titles]}
+      return {...state, titles: [...action.payload.titles]};
     
     case GET_POST:
-      return {...state, post: {...action.payload.post}}
+      // make a copy of state.posts and add the newly retreived post with key of id and val of the data
+      const currPosts = {...state.posts, [action.payload.post.id]: action.payload.post}
+      return {...state, posts: currPosts};
 
     case ADD_POST:
-      return {...state, post: {...action.payload.post}}
+      return {...state, posts: {...state.posts, [action.payload.post.id]: action.payload.post}};
 
     case EDIT_POST:
-      return editPost(state, postData.postId, postData.data );
+      // get the comments from current state
+      const editedPostComments = [...state.posts[action.paylod.postId].comments];
+      const editedPost = {...action.payload.post, comments: editedPostComments};
+      return {...state, posts: {...state.posts, [action.payload.post.id]: editedPost}};
     
     case DELETE_POST:
       const deletedPosts = {...state.posts};
