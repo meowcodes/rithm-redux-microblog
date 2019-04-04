@@ -7,6 +7,14 @@ import { deletePost, addComment, deleteComment } from './actions';
 import EditPost from './EditPost';
 import Comments from './Comments';
 
+/**
+ * Receives history and postId from Route
+ * Receives single post data from Redux store
+ * 
+ * Renders post data or an edit form
+ * 
+ * Sends post id to delete & comment data to add/delete to Redux store
+ */
 class BlogPost extends Component {
     constructor(props) {
         super(props);
@@ -14,7 +22,7 @@ class BlogPost extends Component {
             edit: false
         }
         this.toggleEdit = this.toggleEdit.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
+        this.handleDeletePost = this.handleDeletePost.bind(this);
         this.handleDeleteComment = this.handleDeleteComment.bind(this);
         this.handleAddComment = this.handleAddComment.bind(this);
     }
@@ -26,7 +34,7 @@ class BlogPost extends Component {
         })
     }
 
-    handleDelete() {
+    handleDeletePost() {
         this.props.deletePost(this.props.postId);
         this.props.history.push('/');
     }
@@ -54,7 +62,7 @@ class BlogPost extends Component {
                         <p><i>{this.props.post.description}</i></p>
                         <p>{this.props.post.body}</p>
                         <button onClick={this.toggleEdit}>Edit</button>
-                        <button onClick={this.handleDelete}>Delete</button>
+                        <button onClick={this.handleDeletePost}>Delete</button>
                         <Comments comments={this.props.post.comments}
                             triggerAddComment={this.handleAddComment} triggerDeleteComment={this.handleDeleteComment} />
                     </>
@@ -64,7 +72,6 @@ class BlogPost extends Component {
         );
     }
 }
-
 
 function mapStateToProps(reduxState, ownProps) {
     if(ownProps.postId){

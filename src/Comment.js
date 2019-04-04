@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+/**
+ * Receives all comments for a post from BlogPost
+ * 
+ */
 class Comment extends Component {
 
   constructor(props){

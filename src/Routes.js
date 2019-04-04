@@ -4,6 +4,9 @@ import Microblog from './Microblog';
 import AddPost from './AddPost';
 import BlogPost from './BlogPost';
 
+/**
+ * Routes to home (Microblog), new post form (AddPost), and indv posts (BlogPost)
+ */
 class Routes extends Component {
 
   render() {

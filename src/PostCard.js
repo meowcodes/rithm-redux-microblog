@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './PostCard.css';
 
+/**
+ * Receives single post data from PostList
+ * Renders a card with post data
+ */
 class PostCard extends Component {
     render() {
         return (
