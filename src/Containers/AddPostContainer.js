@@ -10,8 +10,8 @@ import PostForm from '../Components/PostForm';
  * 
  * Sends new post data to Redux store
  * Redirects to homepage
- */
-class AddPost extends Component {
+ */ 
+class AddPostContainer extends Component {
 
   constructor(props) {
     super(props);
@@ -41,14 +41,8 @@ class AddPost extends Component {
   }
 }
 
-function mapStateToProps(reduxState, ownProps) {
-  if (ownProps.postId) {
-    const id = ownProps.postId;
-    const post = reduxState.posts[id];
-    return { post: post };
-  } else {
-    return {};
-  }
+function mapStateToProps() {
+  return {};
 }
 
-export default connect(mapStateToProps, { addPost })(AddPost);
+export default connect(mapStateToProps, { addPost })(AddPostContainer);

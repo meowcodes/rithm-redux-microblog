@@ -12,7 +12,7 @@ import PostForm from '../Components/PostForm';
  * Sends toggleEdit trigger to BlogPost 
  * Sends updated post data to Redux store
  */
-class EditPost extends Component {
+class EditPostContainer extends Component {
 
   constructor(props) {
     super(props);
@@ -44,14 +44,13 @@ class EditPost extends Component {
   }
 }
 
-function mapStateToProps(reduxState, ownProps) {
-  if (ownProps.postId) {
-    const id = ownProps.postId;
-    const post = reduxState.posts[id];
-    return { post: post };
+function mapStateToProps(reduxState, {postId}) {
+  if (postId) {
+    const post = reduxState.posts[postId];
+    return { post };
   } else {
     return {};
   }
 }
 
-export default connect(mapStateToProps, { editPost })(EditPost);
+export default connect(mapStateToProps, { editPost })(EditPostContainer);

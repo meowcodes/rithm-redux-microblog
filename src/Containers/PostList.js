@@ -8,13 +8,13 @@ import PostCard from '../Components/PostCard';
  */
 class PostList extends Component {
   render() {
-    
-    const postCards = Object.keys(this.props.posts).map((id) =>       
+    const postData = this.props;
+    const postCards = Object.keys(postData.posts).map((id) =>       
       <PostCard 
-        title={this.props.posts[id].title} 
+        title={postData.posts[id].title} 
         key={id}
         postId={id}
-        description={this.props.posts[id].description} 
+        description={postData.posts[id].description} 
       />
     );
     

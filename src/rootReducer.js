@@ -7,8 +7,8 @@ const INITIAL_STATE = { posts: {} };
  * Returns new/current state
  */
 function rootReducer(state = INITIAL_STATE, action) {
-  // rename if payload sent
-  const postData = action.payload? action.payload : null;
+  // not repeating action.payload ; 
+  const postData = action.payload? action.payload : {};
 
   switch(action.type){
 

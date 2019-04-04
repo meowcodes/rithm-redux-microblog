@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Microblog from './Microblog';
-import AddPost from '../Containers/AddPost';
+import AddPostContainer from '../Containers/AddPostContainer';
 import BlogPost from '../Containers/BlogPost';
 
 /**
@@ -22,7 +22,7 @@ class Routes extends Component {
         <Route
           exact
           path="/new"
-          render={(rtProps) => <AddPost
+          render={(rtProps) => <AddPostContainer
             history={rtProps.history}
           />}
         />
