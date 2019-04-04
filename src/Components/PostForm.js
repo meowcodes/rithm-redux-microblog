@@ -65,9 +65,7 @@ class PostForm extends Component {
 					/>
 
 					<button type="submit">{this.props.btnText}</button>
-
-					{this.props.btnText === "Edit" && <button onClick={this.props.triggerToggleEdit}>Cancel</button>}
-					{this.props.btnText === "Add" && <Link to="/"><button> Cancel </button></Link>}
+					<button onClick={this.props.triggerCancel}>Cancel</button>
 
 				</form>
 			</div>

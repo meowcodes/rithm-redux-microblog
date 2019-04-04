@@ -26,14 +26,18 @@ class EditPost extends Component {
     this.props.editPost(this.props.postId, editedData);
   }
 
+  handleCancel() {
+    this.props.triggerToggleEdit();
+  }
+
   render() {
     return (
       <div className="EditPost">
-        <PostForm 
-          postData={ this.props.post } 
-          triggerAction={ this.handleEdit }
-          triggerToggleEdit={this.props.triggerToggleEdit}
-          btnText="Edit" 
+        <PostForm
+          postData={this.props.post}
+          triggerAction={this.handleEdit}
+          triggerCancel={this.handleCancel}
+          btnText="Edit"
         />
       </div>
     );
