@@ -7,6 +7,7 @@ import PostCard from '../Components/PostCard';
  * Renders PostCard for each post
  */
 class PostList extends Component {
+
   render() {
     const postData = this.props;
     const postCards = Object.keys(postData.posts).map((id) =>       
