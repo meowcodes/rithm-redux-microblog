@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 
 /**
- * Receives all comments for a post from BlogPost
+ * Receives one comment from Comments
  * 
+ * Renders one comment with delete button
+ * 
+ * Sends triggerDelete with comment id to BlogPost (through Comments)
  */
 class Comment extends Component {
 

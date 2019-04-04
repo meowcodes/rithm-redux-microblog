@@ -12,6 +12,7 @@ import rootReducer from './rootReducer';
 
 import './index.css';
 
+// create a Redux store - include Redux debug tool
 const store = createStore(
   rootReducer,
   compose(
@@ -21,6 +22,9 @@ const store = createStore(
   )
 );
 
+/**
+ * Render App with Redux and Router wrappers
+ */
 ReactDOM.render(
   <Provider store={ store } >
     <BrowserRouter>

@@ -7,14 +7,14 @@ import './PostCard.css';
  * Renders a card with post data
  */
 class PostCard extends Component {
-    render() {
-        return (
-            <div className="PostCard">
-                <Link to={`/${this.props.postId}`}><p>{this.props.title}</p></Link>
-                <p><i>{this.props.description}</i></p>
-            </div>
-        );
-    }
+	render() {
+		return (
+			<div className="PostCard">
+				<Link to={`/${this.props.postId}`}><p>{this.props.title}</p></Link>
+				<p><i>{this.props.description}</i></p>
+			</div>
+		);
+	}
 }
 
 export default PostCard;

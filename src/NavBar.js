@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 
+/**
+ * Renders a Navbar with links
+ */
 class NavBar extends Component {
   render() {
     return (

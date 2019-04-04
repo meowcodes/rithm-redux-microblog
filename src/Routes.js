@@ -11,30 +11,35 @@ class Routes extends Component {
 
   render() {
     return (
-        <Switch>
-          <Route 
-            exact
-            path="/"
-            render={ () => <Microblog /> }
-          />
-          <Route 
-            exact
-            path="/new"
-            render={ (rtProps) => <AddPost 
-              history={rtProps.history}
-            />}
-          />
-          <Route 
-            exact
-            path="/:postId"
-            render={ (rtProps) => <BlogPost 
-              cantFind="/"
-              history={rtProps.history}
-              postId={rtProps.match.params.postId}
-            /> }
-          />
-          <Redirect to="/" />
-        </Switch>
+      <Switch>
+        
+        <Route
+          exact
+          path="/"
+          render={() => <Microblog />}
+        />
+
+        <Route
+          exact
+          path="/new"
+          render={(rtProps) => <AddPost
+            history={rtProps.history}
+          />}
+        />
+
+        <Route
+          exact
+          path="/:postId"
+          render={(rtProps) => <BlogPost
+            cantFind="/"
+            history={rtProps.history}
+            postId={rtProps.match.params.postId}
+          />}
+        />
+
+        <Redirect to="/" />
+
+      </Switch>
     );
   }
 }
