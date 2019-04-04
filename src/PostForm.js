@@ -9,13 +9,14 @@ class PostForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            title: this.props ? this.props.title : "",
-            description: this.props ? this.props.description : "",
-            body: this.props ? this.props.body : "",
+            title: this.props.post ? this.props.post.title : "",
+            description: this.props.post ? this.props.post.description : "",
+            body: this.props.post ? this.props.post.body : "",
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
 
     handleChange(evt) {
         this.setState({
@@ -25,13 +26,12 @@ class PostForm extends Component {
 
     handleSubmit(evt) {
         evt.preventDefault();
-        if (this.props.data) {
+        if (this.props.post) {
             this.props.toggleEdit();
 
+            const editedData = {...this.state, comments: this.props.post.comments}
 
-            const editedData = { postId: [this.props.id], data:{...this.state, comments: this.props.comments} }
-
-            this.props.editPost(editedData);
+            this.props.editPost(this.props.id, editedData);
         } else {
             this.props.addPost({ ...this.state, comments: {} });
             this.props.history.push('/');

@@ -32,7 +32,6 @@ class BlogPost extends Component {
     }
     
     handleAddComment(commentText) {
-        console.log("WHERHEWIRQHWR", this.props, this.props.id)
         this.props.addComment(this.props.id, commentText);
     }
 
@@ -46,7 +45,7 @@ class BlogPost extends Component {
         return (
             <div className="BlogPost" >
                 {this.state.edit
-                    ? <PostForm history={this.props.history} id={this.props.postId} toggleEdit={ this.toggleEdit }/>
+                    ? <PostForm history={this.props.history} id={this.props.id} toggleEdit={ this.toggleEdit }/>
                     : <>
                         <h3>{this.props.post.title}</h3>
                         <p><i>{this.props.post.description}</i></p>

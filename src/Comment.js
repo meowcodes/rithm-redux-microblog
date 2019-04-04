@@ -12,7 +12,6 @@ class Comment extends Component {
   }
 
   render() {
-    console.log("IN INV COM", this.props)
     return (
       <div>
         <button onClick={this.handleClick}>X</button>

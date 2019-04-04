@@ -15,19 +15,17 @@ function rootReducer(state = INITIAL_STATE, action) {
       return { posts: addedPosts }
 
     case EDIT_POST:
-      return editPost(state, postData.id, postData.data );
-
+    return editPost(state, postData.id, postData.data );
+    
     case DELETE_POST:
       const deletedPosts = {...state.posts};
-      delete deletedPosts(Object.keys(postData)[0]);
+      delete deletedPosts[postData.postId];
 
       return { posts: deletedPosts }
     
     case ADD_COMMENT:
-      console.log("IN RED", state.posts[postData.postId])
       const targetPostAdd = state.posts[postData.postId];
       const addedComments = {...targetPostAdd.comments, [uuid()]: postData.commentText };
-      console.log("IN RED2", addedComments);
 
       return editPost(state, postData.postId, {...targetPostAdd, comments: addedComments});
 
@@ -43,7 +41,6 @@ function rootReducer(state = INITIAL_STATE, action) {
 }
 
 function editPost(state, postId, postData) {
-  console.log("IN REDIT edit", state, postId, postData)
   const editedPosts = {...state.posts, [postId]: postData}
   return { posts: editedPosts }
 }
