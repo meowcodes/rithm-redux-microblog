@@ -8,10 +8,10 @@ export function addPost(postDataObj) {
     }
 }
 
-export function editPost(postDataObj) {
+export function editPost(postId, postDataObj) {
     return {
         type: EDIT_POST,
-        payload: postDataObj
+        payload: { id: postId, data: postDataObj }
     }
 }
 

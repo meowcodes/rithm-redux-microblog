@@ -10,37 +10,42 @@ function rootReducer(state = INITIAL_STATE, action) {
   switch(action.type){
 
     case ADD_POST:
-      postData.postId = uuid();
-      const addedPosts = [...state.posts, postData];
+      const addedPosts = {...state.posts, [uuid()]: postData};
+
       return { posts: addedPosts }
 
     case EDIT_POST:
-      return editPost(state, postData);
+      return editPost(state, postData.id, postData.data );
 
     case DELETE_POST:
-      const deletedPosts = state.posts.filter(p => p.postId !== postData.postId);
+      const deletedPosts = {...state.posts};
+      delete deletedPosts(Object.keys(postData)[0]);
+
       return { posts: deletedPosts }
     
     case ADD_COMMENT:
-      const targetPostAdd = state.posts.filter(c => c.id === postData.postId);
-      const addedComments = [...targetPostAdd.comments, {id: uuid(), "text": postData.commentText}]
+      console.log("IN RED", state.posts[postData.postId])
+      const targetPostAdd = state.posts[postData.postId];
+      const addedComments = {...targetPostAdd.comments, [uuid()]: postData.commentText };
+      console.log("IN RED2", addedComments);
 
-      return editPost(state, {...targetPostAdd, comments: addedComments});
+      return editPost(state, postData.postId, {...targetPostAdd, comments: addedComments});
 
     case DELETE_COMMENT:
-      const targetPostDelete = state.posts.filter(c => c.id === postData.postId);
-      const deletedComments = targetPostDelete.comments.filter( c => c.id !== postData.commentId)
+      const targetPostDelete = state.posts[postData.postId];
+      delete targetPostDelete.comments[postData.commentId];
 
-      return editPost(state, {...targetPostDelete, comments: deletedComments});
+      return editPost(state, postData.postId, targetPostDelete);
 
     default:
       return state;
   }
 }
 
-function editPost(state, postData) {
-  const editedPosts = state.posts.filter(p => p.postId !== postData.postId);
-  return { posts: [...editedPosts, postData] }
+function editPost(state, postId, postData) {
+  console.log("IN REDIT edit", state, postId, postData)
+  const editedPosts = {...state.posts, [postId]: postData}
+  return { posts: editedPosts }
 }
 
 export default rootReducer;

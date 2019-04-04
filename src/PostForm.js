@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import { connect } from 'react-redux';
+import { addPost, editPost } from './actions';
+
 class PostForm extends Component {
 
     constructor(props) {
         super(props);
-        this.state={
-            title: this.props.data ? this.props.data.title : "",
-            description: this.props.data ? this.props.data.description : "",
-            body: this.props.data ? this.props.data.body : "",
+        this.state = {
+            title: this.props ? this.props.title : "",
+            description: this.props ? this.props.description : "",
+            body: this.props ? this.props.body : "",
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,13 +25,15 @@ class PostForm extends Component {
 
     handleSubmit(evt) {
         evt.preventDefault();
-        if(this.props.data){
-            console.log("EDITNG")
-            const editedData = {...this.state, postId: this.props.data.postId, comments: this.props.data.comments }
-            this.props.triggerEdit(editedData);
-        }else {
-            console.log("NEWING")
-            this.props.triggerAdd({...this.state, comments: []});
+        if (this.props.data) {
+            this.props.toggleEdit();
+
+
+            const editedData = { postId: [this.props.id], data:{...this.state, comments: this.props.comments} }
+
+            this.props.editPost(editedData);
+        } else {
+            this.props.addPost({ ...this.state, comments: {} });
             this.props.history.push('/');
         }
     }
@@ -39,24 +44,39 @@ class PostForm extends Component {
                 <form onSubmit={this.handleSubmit}>
 
                     <label htmlFor="title">Title: </label>
-                    <input name="title" id="title" 
-                    value={this.state.title}  onChange={this.handleChange}/>
+                    <input name="title" id="title"
+                        value={this.state.title} onChange={this.handleChange} />
 
                     <label htmlFor="description">Description: </label>
-                    <input name="description" id="description" 
-                    value={this.state.description}  onChange={this.handleChange}/>
+                    <input name="description" id="description"
+                        value={this.state.description} onChange={this.handleChange} />
 
                     <label htmlFor="body">Body: </label>
-                    <textarea name="body" id="body" 
-                    value={this.state.body}  onChange={this.handleChange}/>
-                    
+                    <textarea name="body" id="body"
+                        value={this.state.body} onChange={this.handleChange} />
+
                     <button type="submit"> Save </button>
                     <Link to="/"><button> Cancel </button></Link>
-                    
+
                 </form>
             </div>
         );
     }
 }
 
-export default PostForm;
+function mapStateToProps(reduxState, ownProps) {
+    if(ownProps.id){
+        const id = ownProps.id;
+        const post = reduxState.posts[id];
+        return { post: post };
+    }else {
+        return {};
+    }
+}
+
+const mapDispatchToProps = {
+    addPost,
+    editPost
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostForm);

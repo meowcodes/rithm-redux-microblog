@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PostCard from './PostCard';
 
 class PostList extends Component {
   render() {
-    const postCards = this.props.posts.map((p) => <PostCard 
-      title={p.title} 
-      key={p.postId}
-      postId={p.postId}
-      description={p.description} />)
+    
+    const postCards = Object.keys(this.props.posts).map((id) => <PostCard 
+      title={this.props.posts[id].title} 
+      key={id}
+      postId={id}
+      description={this.props.posts[id].description} />
+    );
+    
     return (
       <div className="PostList">
         { postCards }
@@ -16,4 +20,9 @@ class PostList extends Component {
   }
 }
 
-export default PostList;
+function mapStateToProps(reduxState) {
+  return { posts: reduxState.posts };
+}
+
+
+export default connect(mapStateToProps)(PostList);

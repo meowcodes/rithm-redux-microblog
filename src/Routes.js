@@ -6,40 +6,26 @@ import BlogPost from './BlogPost';
 
 class Routes extends Component {
 
-  constructor(props) {
-    super(props);
-    this.findOnePost=this.findOnePost.bind(this);
-  }
-
-  findOnePost(id) {
-    const currPost = this.props.posts.filter((p) => p.postId===id)[0];
-
-    return currPost;
-  }
-
   render() {
     return (
         <Switch>
           <Route 
             exact
             path="/"
-            render={ () => <Microblog  posts={this.props.posts}/> }
+            render={ () => <Microblog /> }
           />
           <Route 
             exact
             path="/new"
-            render={ (rtProps) => <PostForm history={rtProps.history}
-              triggerAdd={this.props.triggerAdd} /> }
+            render={ (rtProps) => <PostForm history={rtProps.history} />}
           />
           <Route 
             exact
             path="/:postId"
             render={ (rtProps) => <BlogPost 
-              history={rtProps.history}
               cantFind="/"
-              data={this.findOnePost(rtProps.match.params.postId)} 
-              triggerDelete={ this.props.triggerDelete }
-              triggerEdit={ this.props.triggerEdit }
+              history={rtProps.history}
+              id={rtProps.match.params.postId}
             /> }
           />
           <Redirect to="/" />

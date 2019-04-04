@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import uuid from 'uuid/v4';
+
+import { connect } from 'react-redux';
+import { deletePost, addComment, deleteComment } from './actions';
+
 import PostForm from './PostForm';
 import Comments from './Comments';
 
@@ -11,7 +14,6 @@ class BlogPost extends Component {
             edit: false
         }
         this.toggleEdit = this.toggleEdit.bind(this);
-        this.handleEdit = this.handleEdit.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.handleDeleteComment = this.handleDeleteComment.bind(this);
         this.handleAddComment = this.handleAddComment.bind(this);
@@ -23,63 +25,59 @@ class BlogPost extends Component {
             edit: !currEdit
         })
     }
-    
-    handleEdit(editedData, toggle=true) {
-        this.props.triggerEdit(editedData);
-        if(toggle){
-            this.toggleEdit();
-        }
-    }
 
     handleDelete() {
-        this.props.triggerDelete(this.props.data.postId);
+        this.props.deletePost(this.props.id);
         this.props.history.push('/');
+    }
+    
+    handleAddComment(commentText) {
+        console.log("WHERHEWIRQHWR", this.props, this.props.id)
+        this.props.addComment(this.props.id, commentText);
     }
 
     handleDeleteComment(commentId) {
-        let updatedComments = this.props.data.comments.filter(c => c.id !== commentId);
-        let updatedPost = {...this.props.data, comments: updatedComments}
-        this.handleEdit(updatedPost, false);
+        this.props.deleteComment(this.props.id, commentId);
     }
 
-    handleAddComment(commentText) {
-        let updatedComments = [...this.props.data.comments, {id: uuid(), "text": commentText}]
-        let updatedPost = {...this.props.data, comments: updatedComments}
-        this.handleEdit(updatedPost, false);
-    }
-    
     render() {
-        if(this.props.data === undefined ) return <Redirect to={this.props.cantFind} />;
+        if (this.props.post === undefined) return <Redirect to={this.props.cantFind} />;
 
         return (
             <div className="BlogPost" >
-                { this.state.edit 
-                    ? <PostForm history={this.props.history} data={this.props.data} triggerEdit={ this.handleEdit } />
+                {this.state.edit
+                    ? <PostForm history={this.props.history} id={this.props.postId} toggleEdit={ this.toggleEdit }/>
                     : <>
-                        <h3>{this.props.data.title}</h3>
-                        <p><i>{this.props.data.description}</i></p>
-                        <p>{this.props.data.body}</p>
-                        <button onClick={ this.toggleEdit }>Edit</button>
-                        <button onClick={ this.handleDelete }>Delete</button>
-                        <Comments comments={this.props.data.comments} 
-                        triggerAddComment={this.handleAddComment}triggerDeleteComment={this.handleDeleteComment }/>
+                        <h3>{this.props.post.title}</h3>
+                        <p><i>{this.props.post.description}</i></p>
+                        <p>{this.props.post.body}</p>
+                        <button onClick={this.toggleEdit}>Edit</button>
+                        <button onClick={this.handleDelete}>Delete</button>
+                        <Comments comments={this.props.post.comments}
+                            triggerAddComment={this.handleAddComment} triggerDeleteComment={this.handleDeleteComment} />
                     </>
                 }
-                
+
             </div>
         );
     }
 }
 
 
-function mapStateToProps(reduxState) {
-    return { posts: reduxState.posts };
-  }
-  
-  const mapDispatchToProps = {
+function mapStateToProps(reduxState, ownProps) {
+    if(ownProps.id){
+        const id = ownProps.id;
+        const post = reduxState.posts[id];
+        return { post: post };
+    }else {
+        return {};
+    }
+}
+
+const mapDispatchToProps = {
+    deletePost,
     addComment,
     deleteComment
-  
-  }
-  
-  export default connect(mapStateToProps, mapDispatchToProps)(BlogPost);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BlogPost);

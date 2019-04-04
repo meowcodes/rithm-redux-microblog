@@ -26,7 +26,6 @@ const mapDispatchToProps = {
   addPost,
   editPost,
   deletePost
-
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App));
