@@ -20,13 +20,26 @@ export function getTitlesFromApi() {
 export function gotTitles(titles) {
 	return {
 		type: GET_TITLES,
-		payload: {...titles}
+		payload: { titles }
 	}
 }
 
-export function getPost() {
+export function getPostFromApi() {
+	return async function (dispatch) {
+		try {
+			const post = await microblogApi.getPost();
+			dispatch(gotPost(post));
+		} catch(err) {
+			const errMsg = err.response.data;
+			dispatch(showErr(errMsg));
+		}
+	}
+}
+
+export function gotPost(post) {
 	return {
-		type: GET_POST
+		type: GET_POST,
+		payload: { post }
 	}
 }
 

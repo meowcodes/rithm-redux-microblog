@@ -1,7 +1,7 @@
 import { GET_TITLES, GET_POST, ADD_POST, EDIT_POST, DELETE_POST, GET_COMMENTS, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT } from './actionTypes';
 
 
-const INITIAL_STATE = { posts: {} };
+const INITIAL_STATE = { titles: [], post: {} };
 
 /**
  * Receives state/action through action creators
@@ -13,8 +13,10 @@ function rootReducer(state = INITIAL_STATE, action) {
 
   switch(action.type){
     case GET_TITLES:
-      return {...state, titles: {...action.payload}}
-
+      return {...state, titles: [...action.payload.titles]}
+    
+    case GET_POST:
+      return {...state, post: {...action.payload.post}}
 
     case ADD_POST:
       const addedPosts = {...state.posts, [postData.newId]: postData};
