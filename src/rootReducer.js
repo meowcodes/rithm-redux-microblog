@@ -18,7 +18,7 @@ function rootReducer(state = INITIAL_STATE, action) {
       return { posts: addedPosts }
 
     case EDIT_POST:
-      return editPost(state, postData.id, postData.data );
+      return editPost(state, postData.postId, postData.data );
     
     case DELETE_POST:
       const deletedPosts = {...state.posts};
