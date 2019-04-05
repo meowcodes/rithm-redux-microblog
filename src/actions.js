@@ -32,7 +32,6 @@ export function getPostFromApi(postId) {
 			const post = await microblogApi.getPost(postId);
 			dispatch(gotPost(post));
 		} catch(err) {
-			console.log("POST ERR", err)
 			const errMsg = err.response.data;
 			dispatch(showErr(errMsg));
 		}
@@ -97,7 +96,6 @@ export function editPostFromApi(postId, postData) {
 			}
 			dispatch(editedPost(postId, post, title));
 		} catch(err) {
-			console.log(err);
 			const errMsg = err.response.data;
 			dispatch(showErr(errMsg));
 		}
@@ -199,7 +197,6 @@ export function deleteCommentFromApi(postId, commentId) {
 			await microblogApi.deleteComment(postId, commentId);
 			dispatch(deletedComment(postId, commentId));
 		} catch(err) {
-			console.log("DELETE ERR", err)
 			const errMsg = err.response.data;
 			dispatch(showErr(errMsg));
 		}

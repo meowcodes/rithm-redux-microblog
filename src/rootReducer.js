@@ -90,14 +90,11 @@ function rootReducer(state = INITIAL_STATE, action) {
     case DELETE_COMMENT:
       // make a copy of target post comments
       const targetPostDeleteComments = state.posts[action.payload.postId].comments;
-      console.log("COMMENTS", targetPostDeleteComments);
-      console.log("PAYLOAD", action.payload);
 
       // delete target comment
       const deletedComments = targetPostDeleteComments.filter(c => c.id !== action.payload.commentId);
       // make a copy of target post with new comments obj
 
-      console.log(deletedComments);
       const targetPostDelete = {...state.posts[action.payload.postId],
         comments: deletedComments};
 
