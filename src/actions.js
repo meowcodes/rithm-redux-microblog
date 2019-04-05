@@ -18,7 +18,7 @@ export function getTitlesFromApi() {
 	}
 }
 
-export function gotTitles(titles) {
+function gotTitles(titles) {
 	return {
 		type: GET_TITLES,
 		payload: { titles }
@@ -38,7 +38,7 @@ export function getPostFromApi(postId) {
 	}
 }
 
-export function gotPost(post) {
+function gotPost(post) {
 	return {
 		type: GET_POST,
 		payload: { post }
@@ -71,7 +71,7 @@ export function addPostToApi(postData) {
 	}
 }
 
-export function addedPost(newPost, newTitle) {
+function addedPost(newPost, newTitle) {
 	return {
 		type: ADD_POST,
 		payload: { post: newPost, title: newTitle }

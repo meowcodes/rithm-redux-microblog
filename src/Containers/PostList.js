@@ -16,7 +16,7 @@ class PostList extends Component {
     }
   }
 
-
+  // on first load, get titles from API.
   async componentDidMount() {
     try {
       await this.props.getTitlesFromApi();
@@ -31,10 +31,7 @@ class PostList extends Component {
     const postData = this.props;
     let postCards = null;
 
-    if(this.state.error) {
-      return <p>Something went wrong</p>
-    }
-
+    // render PostCards if data avail.
     if(!this.state.loading && this.props.titles){
       postCards =  postData.titles.map((t) =>       
         <PostCard 
@@ -48,7 +45,7 @@ class PostList extends Component {
     
     return (
       <div className="PostList">
-        { postCards }
+        {this.state.error ? <p>Something went wrong</p> : postCards}
       </div>
     );
   }

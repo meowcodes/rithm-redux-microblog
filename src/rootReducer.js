@@ -55,14 +55,17 @@ function rootReducer(state = INITIAL_STATE, action) {
       // make a copy of target post comments
       const targetPostAddComments = state.posts[action.payload.postId].comments;
       // create new comments obj with new comment
-      const addedComments = [...targetPostAddComments, 
+      const addedComments = [
+        ...targetPostAddComments, 
         {...action.payload.comment} 
       ];
       // make a copy of target post with new comments obj
       const targetPostAdd = {...state.posts[action.payload.postId], comments: addedComments};
 
-      const addCommentPosts = {...state.posts, 
-        [action.payload.postId]: targetPostAdd}
+      const addCommentPosts = {
+        ...state.posts, 
+        [action.payload.postId]: targetPostAdd
+      }
 
       // update post with new post data
       return {...state, posts: addCommentPosts};

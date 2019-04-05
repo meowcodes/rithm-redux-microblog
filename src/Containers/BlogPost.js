@@ -29,7 +29,7 @@ class BlogPost extends Component {
 		this.handleAddComment = this.handleAddComment.bind(this);
 	}
 
-	// if post not in redux, get from API. Update loading state to false
+	// checks if post in redux, if not, gets from api. updates state. handles errs
 	async componentDidMount() {
 		if (this.props.post === undefined) {
 			try {
@@ -65,8 +65,8 @@ class BlogPost extends Component {
 
 	// FIXME: add edit comment
 
-	async handleDeleteComment(commentId) {
-		await this.props.deleteCommentFromApi(this.props.postId, commentId);
+	handleDeleteComment(commentId) {
+		this.props.deleteCommentFromApi(this.props.postId, commentId);
 	}
 
 	render() {
@@ -74,7 +74,7 @@ class BlogPost extends Component {
 		const postData = this.props;
 		let editComponents;
 		let showComponents;
-		
+
 		if (!this.state.loading) {
 			editComponents = <EditPostContainer
 				triggerToggleEdit={this.toggleEdit}
@@ -104,12 +104,9 @@ class BlogPost extends Component {
 }
 
 function mapStateToProps(reduxState, { postId }) {
-	if (postId) {
-		let post = reduxState.posts[postId];
-		return { post };
-	} else {
-		return {};
-	}
+
+	let post = reduxState.posts[postId];
+	return { post };
 }
 
 const mapDispatchToProps = {
