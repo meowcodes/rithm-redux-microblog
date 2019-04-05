@@ -109,6 +109,20 @@ export function getComments() {
 	}
 }
 
+export function addCommentToAPI(postId) {
+	return async function (dispatch) {
+		try {
+			const comment = await microblogApi.addComment(postId, text);
+			dispatch(addComment(postId, text));
+
+		} catch(err) {
+			const errMsg = err.response.data;
+			dispatch(showErr(errMsg));
+		}
+	}
+}
+
+
 export function addComment(postId, commentText) {
 	return {
 		type: ADD_COMMENT,
@@ -116,10 +130,37 @@ export function addComment(postId, commentText) {
 	}
 }
 
+export function editCommentFromApi(postId, commentId, text) {
+	return async function (dispatch) {
+		try {
+
+			const comment = await microblogApi.editComment(postId, commentId, text);
+			dispatch(editComment(postId, commentId, text));
+		} catch(err) {
+
+			const errMsg = err.response.data;
+			dispatch(showErr(errMsg));
+		}
+	}
+}
+
 export function editComment(postId, commentId, commentText) {
 	return {
 		type: EDIT_COMMENT,
 		payload: { postId, commentId, commentText }
+	}
+}
+
+export function deleteCommentFromApi(postId, commentId) {
+	return async function (dispatch) {
+		try {
+			const comment = await microblogApi.deletePost(postId, commentId);
+			dispatch(deletedPost(post));
+			getTitlesFromApi();
+		} catch(err) {
+			const errMsg = err.response.data;
+			dispatch(showErr(errMsg));
+		}
 	}
 }
 
