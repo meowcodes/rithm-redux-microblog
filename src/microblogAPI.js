@@ -83,6 +83,7 @@ class microblogApi {
 
 	/** delete comment.*/
 	static async deleteComment(postId, commentId) {
+		console.log("IN DEL COM", postId, commentId);
 		let res = await this.request(`api/posts/${postId}/comments/${commentId}`, {}, "delete");
 
 		return res;

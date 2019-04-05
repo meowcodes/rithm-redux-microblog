@@ -26,10 +26,10 @@ export function gotTitles(titles) {
 }
 
 // get a single post
-export function getPostFromApi() {
+export function getPostFromApi(postId) {
 	return async function (dispatch) {
 		try {
-			const post = await microblogApi.getPost();
+			const post = await microblogApi.getPost(postId);
 			dispatch(gotPost(post));
 		} catch(err) {
 			console.log("POST ERR", err)
@@ -196,7 +196,7 @@ export function editedComment(postId, editedComment) {
 export function deleteCommentFromApi(postId, commentId) {
 	return async function (dispatch) {
 		try {
-			await microblogApi.deletePost(postId, commentId);
+			await microblogApi.deleteComment(postId, commentId);
 			dispatch(deletedComment(postId, commentId));
 		} catch(err) {
 			console.log("DELETE ERR", err)

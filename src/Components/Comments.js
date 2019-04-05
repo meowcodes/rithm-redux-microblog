@@ -11,10 +11,10 @@ import CommentForm from './CommentForm'
 class Comments extends Component {
 
   render() {
-    const comments = this.props.comments.map((obj) => <Comment
-      key={Object.keys(obj)[0]}
-      id={Object.keys(obj)[0]}
-      text={Object.values(obj)[0]}
+    const comments = this.props.comments.map((c) => <Comment
+      key={c.id}
+      id={c.id}
+      text={c.text}
       triggerDeleteComment={this.props.triggerDeleteComment}
     />);
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { getPostFromApi, deletePostFromApi, addCommentToApi, editCommentFromApi, deleteCommentFromApi  } from '../actions';
+import { getPostFromApi, deletePostFromApi, addCommentToApi, editCommentFromApi, deleteCommentFromApi } from '../actions';
 
 import EditPostContainer from './EditPostContainer';
 import Comments from '../Components/Comments';
@@ -19,6 +19,7 @@ class BlogPost extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			loading: true,
 			edit: false
 		}
 		this.toggleEdit = this.toggleEdit.bind(this);
@@ -29,7 +30,14 @@ class BlogPost extends Component {
 
 	async componentDidMount() {
 		if (this.props.post === undefined) {
-			await this.props.getPostFromApi(this.props.postId);
+			try {
+				await this.props.getPostFromApi(this.props.postId);
+				this.setState({
+					loading: false
+				})
+			} catch (err) {
+				if (this.props.post === undefined) return <Redirect to={this.props.cantFind} />;
+			}
 		}
 	}
 
@@ -40,7 +48,7 @@ class BlogPost extends Component {
 	}
 
 	handleDeletePost() {
-		this.props.deletePost(this.props.postId);
+		this.props.deletePostFromApi(this.props.postId);
 		this.props.history.push('/');
 	}
 
@@ -57,25 +65,28 @@ class BlogPost extends Component {
 	render() {
 
 		const postData = this.props;
+		let editComponents;
+		let showComponents;
 
-		if (postData.post === undefined) return <Redirect to={postData.cantFind} />;
+		if (!this.state.loading) {
+			editComponents = <EditPostContainer
+				triggerToggleEdit={this.toggleEdit}
+				postId={postData.postId}
+				edit={true} />
 
-		const editComponents = <EditPostContainer
-			triggerToggleEdit={this.toggleEdit}
-			postId={postData.postId}
-			edit={true} />
-
-		const showComponents = <><h3>{postData.post.title}</h3>
-			<p><i>{postData.post.description}</i></p>
-			<p>{postData.post.body}</p>
-			<button onClick={this.toggleEdit}>Edit</button>
-			<button onClick={this.handleDeletePost}>Delete</button>
-			<Comments comments={postData.post.comments}
-				triggerAddComment={this.handleAddComment} triggerDeleteComment={this.handleDeleteComment} /></>
+			showComponents = <><h3>{postData.post.title}</h3>
+				<p><i>{postData.post.description}</i></p>
+				<p>{postData.post.body}</p>
+				<button onClick={this.toggleEdit}>Edit</button>
+				<button onClick={this.handleDeletePost}>Delete</button>
+				<Comments comments={postData.post.comments}
+					triggerAddComment={this.handleAddComment} triggerDeleteComment={this.handleDeleteComment} /></>
+		}
 
 		return (
 			<div className="BlogPost" >
-				{this.state.edit
+				{this.state.loading && <p>Loading</p>}
+				{!this.state.loading && this.state.edit
 					? <>{editComponents}</>
 					: <>{showComponents}</>
 				}
@@ -86,7 +97,7 @@ class BlogPost extends Component {
 
 function mapStateToProps(reduxState, { postId }) {
 	if (postId) {
-	 	let post = reduxState.posts[postId];
+		let post = reduxState.posts[postId];
 		return { post };
 	} else {
 		return {};
