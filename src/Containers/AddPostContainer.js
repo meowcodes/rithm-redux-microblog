@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addPost } from '../actions';
+import { addPostToApi } from '../actions'
 import PostForm from '../Components/PostForm';
-import {addPostToApi} from '../actions'
 
 /**
  * Receives history from Route
@@ -11,7 +10,7 @@ import {addPostToApi} from '../actions'
  * 
  * Sends new post data to Redux store
  * Redirects to homepage
- */ 
+ */
 class AddPostContainer extends Component {
 
   constructor(props) {
@@ -19,8 +18,8 @@ class AddPostContainer extends Component {
     this.handleAdd = this.handleAdd.bind(this);
   }
 
-  handleAdd(newPostData) {
-    this.props.addPost({ ...newPostData, comments: {} });
+  async handleAdd(newPostData) {
+    await this.props.addPostToApi(newPostData);
     this.props.history.push('/');
   }
 

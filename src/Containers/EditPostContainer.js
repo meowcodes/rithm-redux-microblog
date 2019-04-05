@@ -20,11 +20,11 @@ class EditPostContainer extends Component {
     this.handleEdit = this.handleEdit.bind(this);
   }
 
-  handleEdit(updatedPostData) {
+  async handleEdit(updatedPostData) {
     this.props.triggerToggleEdit();
 
     const editedData = { ...updatedPostData, comments: this.props.post.comments }
-    this.props.editPost(this.props.postId, editedData);
+    await this.props.editPostFromApi(this.props.postId, editedData);
   }
 
   handleCancel() {

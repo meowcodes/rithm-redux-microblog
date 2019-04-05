@@ -11,25 +11,20 @@ import CommentForm from './CommentForm'
 class Comments extends Component {
 
   render() {
-    let comments = null;
-
-    // render comments if they exist
-    if(Object.keys(this.props.comments).length > 0){
-      comments = Object.keys(this.props.comments).map((id) => <Comment 
-        key={id} 
-        id={id} 
-        text={this.props.comments[id]} 
-        triggerDeleteComment={this.props.triggerDeleteComment} 
-      />);
-    }
+    const comments = this.props.comments.map((obj) => <Comment
+      key={Object.keys(obj)[0]}
+      id={Object.keys(obj)[0]}
+      text={Object.values(obj)[0]}
+      triggerDeleteComment={this.props.triggerDeleteComment}
+    />);
 
     return (
       <div>
         <h3>Comments</h3>
         <div>
-          { comments }
+          {comments}
         </div>
-        <CommentForm triggerAddComment={this.props.triggerAddComment}/>
+        <CommentForm triggerAddComment={this.props.triggerAddComment} />
       </div>
     );
   }

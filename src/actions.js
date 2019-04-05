@@ -32,6 +32,7 @@ export function getPostFromApi() {
 			const post = await microblogApi.getPost();
 			dispatch(gotPost(post));
 		} catch(err) {
+			console.log("POST ERR", err)
 			const errMsg = err.response.data;
 			dispatch(showErr(errMsg));
 		}
@@ -96,6 +97,7 @@ export function editPostFromApi(postId, postData) {
 			}
 			dispatch(editedPost(postId, post, title));
 		} catch(err) {
+			console.log(err);
 			const errMsg = err.response.data;
 			dispatch(showErr(errMsg));
 		}
@@ -143,7 +145,7 @@ export function getComments() {
  * Adds a new comment a post to API
  * Update post with new comment in Redux state
  */
-export function addCommentToAPI(postId, text) {
+export function addCommentToApi(postId, text) {
 	return async function (dispatch) {
 		try {
 			const comment = await microblogApi.addComment(postId, text);
@@ -197,6 +199,7 @@ export function deleteCommentFromApi(postId, commentId) {
 			await microblogApi.deletePost(postId, commentId);
 			dispatch(deletedComment(postId, commentId));
 		} catch(err) {
+			console.log("DELETE ERR", err)
 			const errMsg = err.response.data;
 			dispatch(showErr(errMsg));
 		}

@@ -30,7 +30,7 @@ function rootReducer(state = INITIAL_STATE, action) {
 
     case EDIT_POST:
       // get the comments from current state
-      const editedPostComments = [...state.posts[action.paylod.postId].comments];
+      const editedPostComments = [...state.posts[action.payload.postId].comments];
       const editedPost = {...action.payload.post, comments: editedPostComments};
 
       // replace old title with new title
@@ -55,7 +55,9 @@ function rootReducer(state = INITIAL_STATE, action) {
       // make a copy of target post comments
       const targetPostAddComments = state.posts[action.payload.postId].comments;
       // create new comments obj with new comment
-      const addedComments = {...targetPostAddComments, [action.payload.comment.id]: action.payload.comment.text};
+      const addedComments = [...targetPostAddComments, 
+        {[action.payload.comment.id]: action.payload.comment.text} 
+      ];
       // make a copy of target post with new comments obj
       const targetPostAdd = {...state.posts[action.payload.postId], comments: addedComments};
 
@@ -87,10 +89,15 @@ function rootReducer(state = INITIAL_STATE, action) {
 
     case DELETE_COMMENT:
       // make a copy of target post comments
-      const targetPostDeleteComments = {...state.posts[action.payload.postId].comments};
+      const targetPostDeleteComments = state.posts[action.payload.postId].comments;
+      console.log("COMMENTS", targetPostDeleteComments);
+      console.log("PAYLOAD", action.payload);
+
       // delete target comment
-      const deletedComments = targetPostDeleteComments.filter(c => c.id !== action.payload.commentId);
+      const deletedComments = targetPostDeleteComments.filter(c => Object.keys(c)[0] !== action.payload.commentId);
       // make a copy of target post with new comments obj
+
+      console.log(deletedComments);
       const targetPostDelete = {...state.posts[action.payload.postId],
         comments: deletedComments};
 
