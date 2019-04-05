@@ -5,6 +5,7 @@ import { GET_TITLES, GET_POST, ADD_POST, EDIT_POST, DELETE_POST, GET_COMMENTS, A
  * Format data to be sent to the reducer
 */
 
+// gets all titles
 export function getTitlesFromApi() {
 	return async function (dispatch) {
 		try {
@@ -24,6 +25,7 @@ export function gotTitles(titles) {
 	}
 }
 
+// get a single post
 export function getPostFromApi() {
 	return async function (dispatch) {
 		try {
@@ -43,13 +45,25 @@ export function gotPost(post) {
 	}
 }
 
+/**
+ * Add new post to API
+ * Add new post to Redux state
+ * Add new title to Redux state
+ */
 export function addPostToApi(postData) {
 	return async function (dispatch) {
 		try {
 			const post = await microblogApi.addPost(postData);
 			// add an empty comments to post
 			post.comments = [];
-			dispatch(addedPost(post));
+			// format a title for the new post
+			const title = {
+				id:post.id, 
+				title: post.title,
+				description: post.description,
+				votes: post.votes
+			}
+			dispatch(addedPost(post, title));
 		} catch(err) {
 			const errMsg = err.response.data;
 			dispatch(showErr(errMsg));
@@ -57,18 +71,30 @@ export function addPostToApi(postData) {
 	}
 }
 
-export function addedPost(newPost) {
+export function addedPost(newPost, newTitle) {
 	return {
 		type: ADD_POST,
-		payload: { post: newPost }
+		payload: { post: newPost, title: newTitle }
 	}
 }
 
+/**
+ * Send updated post to API
+ * Update post in Redux state
+ * Update title in Redux state
+ */
 export function editPostFromApi(postId, postData) {
 	return async function (dispatch) {
 		try {
 			const post = await microblogApi.editPost(postId, postData);
-			dispatch(editedPost(postId, post));
+			// format a new title for the edited post
+			const title = {
+				id: post.id, 
+				title: post.title,
+				description: post.description,
+				votes: post.votes
+			}
+			dispatch(editedPost(postId, post, title));
 		} catch(err) {
 			const errMsg = err.response.data;
 			dispatch(showErr(errMsg));
@@ -76,19 +102,23 @@ export function editPostFromApi(postId, postData) {
 	}
 }
 
-export function editedPost(postId, updatedPost) {
+export function editedPost(postId, editedPost, editedTitle) {
 	return {
 		type: EDIT_POST,
-		payload: { postId, post: updatedPost }
+		payload: { postId, post: editedPost, title: editedTitle }
 	}
 }
 
+/**
+ * Send delete req to API
+ * Delete post from Redux state
+ * Delete title from Redux state
+ */
 export function deletePostFromApi(postId) {
 	return async function (dispatch) {
 		try {
-			const post = await microblogApi.deletePost(postId);
-			dispatch(deletedPost(post));
-			getTitlesFromApi();
+			await microblogApi.deletePost(postId);
+			dispatch(deletedPost(postId));
 		} catch(err) {
 			const errMsg = err.response.data;
 			dispatch(showErr(errMsg));
@@ -109,12 +139,15 @@ export function getComments() {
 	}
 }
 
+/**
+ * Adds a new comment a post to API
+ * Update post with new comment in Redux state
+ */
 export function addCommentToAPI(postId) {
 	return async function (dispatch) {
 		try {
 			const comment = await microblogApi.addComment(postId, text);
-			dispatch(addComment(postId, text));
-
+			dispatch(addedComment(postId, comment));
 		} catch(err) {
 			const errMsg = err.response.data;
 			dispatch(showErr(errMsg));
@@ -123,19 +156,22 @@ export function addCommentToAPI(postId) {
 }
 
 
-export function addComment(postId, commentText) {
+export function addedComment(postId, comment) {
 	return {
 		type: ADD_COMMENT,
-		payload: { postId, commentText },
+		payload: { postId, comment },
 	}
 }
 
+/**
+ * Send updated comment to API
+ * Update post with updated comment in Redux state
+ */
 export function editCommentFromApi(postId, commentId, text) {
 	return async function (dispatch) {
 		try {
-
 			const comment = await microblogApi.editComment(postId, commentId, text);
-			dispatch(editComment(postId, commentId, text));
+			dispatch(editedComment(postId, comment));
 		} catch(err) {
 
 			const errMsg = err.response.data;
@@ -144,19 +180,22 @@ export function editCommentFromApi(postId, commentId, text) {
 	}
 }
 
-export function editComment(postId, commentId, commentText) {
+export function editedComment(postId, editedComment) {
 	return {
 		type: EDIT_COMMENT,
-		payload: { postId, commentId, commentText }
+		payload: { postId, comment: editedComment }
 	}
 }
 
+/**
+ * Send delete comment req to API
+ * Update post with deleted comment in Redux state
+ */
 export function deleteCommentFromApi(postId, commentId) {
 	return async function (dispatch) {
 		try {
-			const comment = await microblogApi.deletePost(postId, commentId);
-			dispatch(deletedPost(post));
-			getTitlesFromApi();
+			await microblogApi.deletePost(postId, commentId);
+			dispatch(deletedComment(postId, commentId));
 		} catch(err) {
 			const errMsg = err.response.data;
 			dispatch(showErr(errMsg));
@@ -164,7 +203,7 @@ export function deleteCommentFromApi(postId, commentId) {
 	}
 }
 
-export function deleteComment(postId, commentId) {
+export function deletedComment(postId, commentId) {
 	return {
 		type: DELETE_COMMENT,
 		payload: { postId, commentId }
@@ -174,6 +213,6 @@ export function deleteComment(postId, commentId) {
 export function showErr(errMsg) {
 	return {
 		type: SHOW_ERR,
-		payload: { message: errMsg}
+		payload: { message: errMsg }
 	}
 }

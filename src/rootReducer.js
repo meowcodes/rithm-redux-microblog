@@ -21,54 +21,87 @@ function rootReducer(state = INITIAL_STATE, action) {
       return {...state, posts: currPosts};
 
     case ADD_POST:
-      return {...state, posts: {...state.posts, [action.payload.post.id]: action.payload.post}};
+      // add new post to posts
+      const posts = {...state.posts, [action.payload.post.id]: action.payload.post};
+      // add new title to titles
+      const titlesAdd = [...state.titles, action.payload.title];
+
+      return { titles: titlesAdd, posts };
 
     case EDIT_POST:
       // get the comments from current state
       const editedPostComments = [...state.posts[action.paylod.postId].comments];
       const editedPost = {...action.payload.post, comments: editedPostComments};
-      return {...state, posts: {...state.posts, [action.payload.post.id]: editedPost}};
+
+      // replace old title with new title
+      const titlesEdit = state.titles.filter(t => t.id !== action.payload.postId );
+
+      return {
+        titles : [...titlesEdit, action.payload.title], 
+        posts: {...state.posts, [action.payload.post.id]: editedPost}
+      };
     
     case DELETE_POST:
+      // delete post from state
       const deletedPosts = {...state.posts};
-      delete deletedPosts[postData.postId];
+      delete deletedPosts[action.payload.postId];
 
-      return { posts: deletedPosts }
+      // delete title from state
+      const titlesDelete = state.titles.filter(t => t.id !== action.payload.postId)
+
+      return { titles: titlesDelete, posts: deletedPosts }
     
     case ADD_COMMENT:
       // make a copy of target post comments
-      const targetPostAddComments = state.posts[postData.postId].comments;
+      const targetPostAddComments = state.posts[action.payload.postId].comments;
       // create new comments obj with new comment
-      const addedComments = {...targetPostAddComments, [postData.newId]: postData.commentText };
+      const addedComments = {...targetPostAddComments, [action.payload.comment.id]: action.payload.comment.text};
       // make a copy of target post with new comments obj
-      const targetPostAdd = {...state.posts[postData.postId], comments: addedComments};
+      const targetPostAdd = {...state.posts[action.payload.postId], comments: addedComments};
+
+      const addCommentPosts = {...state.posts, 
+        [action.payload.postId]: targetPostAdd}
 
       // update post with new post data
-      return editPost(state, postData.postId, targetPostAdd);
+      return {...state, posts: addCommentPosts};
+
+    case EDIT_COMMENT:
+      // make a copy of target post comments
+      const targetPostEditComments = state.posts[action.payload.postId].comments;
+      // add edited comment to a new comment arr
+      const editedComments = targetPostEditComments.map(c => {
+        if(c.id === action.payload.comment.id){
+          return action.payload.comment;
+        }else {
+          return c;
+        }
+      });
+      // make a copy of target post with new comment obj;
+      const targetPostEdit = {...state.posts[action.payload.postId], comments: editedComments};
+
+      const editCommentPosts = {...state.posts,
+        [action.payload.postId]: targetPostEdit}
+
+      // update post with new post data
+      return {...state, posts: editCommentPosts};
 
     case DELETE_COMMENT:
       // make a copy of target post comments
-      const targetPostDeleteComments = {...state.posts[postData.postId].comments};
+      const targetPostDeleteComments = {...state.posts[action.payload.postId].comments};
       // delete target comment
-      delete targetPostDeleteComments[postData.commentId];
+      const deletedComments = targetPostDeleteComments.filter(c => c.id !== action.payload.commentId);
       // make a copy of target post with new comments obj
-      const targetPostDelete = {...state.posts[postData.postId], comments: targetPostDeleteComments};
+      const targetPostDelete = {...state.posts[action.payload.postId],
+        comments: deletedComments};
 
-      // update post with new post data
-      return editPost(state, postData.postId, targetPostDelete);
+      const deleteCommentPosts = {...state.posts,
+        [action.payload.postId]: targetPostDelete}
+
+      return {...state, posts: deleteCommentPosts};
 
     default:
       return state;
   }
-}
-
-/**
- * Receives current state, id of post to update, and new post data
- * Returns new/updated state
- */
-function editPost(state, postId, postData) {
-  const editedPosts = {...state.posts, [postId]: postData}
-  return { posts: editedPosts }
 }
 
 export default rootReducer;
