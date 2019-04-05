@@ -38,6 +38,10 @@ class BlogPost extends Component {
 			} catch (err) {
 				if (this.props.post === undefined) return <Redirect to={this.props.cantFind} />;
 			}
+		} else {
+			this.setState({
+				loading: false
+			})
 		}
 	}
 
