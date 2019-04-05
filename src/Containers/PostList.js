@@ -10,6 +10,11 @@ import {getTitlesFromApi} from '../actions'
 class PostList extends Component {
 
 
+  async componentDidMount() {
+    await this.props.getTitlesFromApi();
+  }
+
+
   render() {
     const postData = this.props;
     const postCards = Object.keys(postData.posts).map((id) =>       
