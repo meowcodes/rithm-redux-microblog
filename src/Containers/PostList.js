@@ -11,20 +11,29 @@ class PostList extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: true
+      loading: true,
+      error: false
     }
   }
 
 
   async componentDidMount() {
-    await this.props.getTitlesFromApi();
-    this.setState({loading: false})
+    try {
+      await this.props.getTitlesFromApi();
+      this.setState({loading: false, error: false})
+    } catch (err) {
+      this.setState({error: err})
+    }
   }
 
 
   render() {
     const postData = this.props;
     let postCards = null;
+
+    if(this.state.error) {
+      return <p>Something went wrong</p>
+    }
 
     if(!this.state.loading && this.props.titles){
       postCards =  postData.titles.map((t) =>       

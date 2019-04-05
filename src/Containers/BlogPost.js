@@ -20,7 +20,8 @@ class BlogPost extends Component {
 		super(props);
 		this.state = {
 			loading: true,
-			edit: false
+			edit: false,
+			error: false
 		}
 		this.toggleEdit = this.toggleEdit.bind(this);
 		this.handleDeletePost = this.handleDeletePost.bind(this);
@@ -28,15 +29,17 @@ class BlogPost extends Component {
 		this.handleAddComment = this.handleAddComment.bind(this);
 	}
 
+	// if post not in redux, get from API. Update loading state to false
 	async componentDidMount() {
 		if (this.props.post === undefined) {
 			try {
 				await this.props.getPostFromApi(this.props.postId);
 				this.setState({
-					loading: false
+					loading: false,
+					error: false
 				})
 			} catch (err) {
-				if (this.props.post === undefined) return <Redirect to={this.props.cantFind} />;
+				this.setState({error: true})
 			}
 		} else {
 			this.setState({
@@ -71,7 +74,7 @@ class BlogPost extends Component {
 		const postData = this.props;
 		let editComponents;
 		let showComponents;
-
+		
 		if (!this.state.loading) {
 			editComponents = <EditPostContainer
 				triggerToggleEdit={this.toggleEdit}
@@ -89,6 +92,7 @@ class BlogPost extends Component {
 
 		return (
 			<div className="BlogPost" >
+				{this.state.error && <Redirect to={this.props.cantFind} />}
 				{this.state.loading && <p>Loading</p>}
 				{!this.state.loading && this.state.edit
 					? <>{editComponents}</>
