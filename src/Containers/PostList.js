@@ -8,23 +8,34 @@ import {getTitlesFromApi} from '../actions'
  * Renders PostCard for each post
  */
 class PostList extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      loading: true
+    }
+  }
 
 
   async componentDidMount() {
     await this.props.getTitlesFromApi();
+    this.setState({loading: false})
   }
 
 
   render() {
     const postData = this.props;
-    const postCards = Object.keys(postData.posts).map((id) =>       
-      <PostCard 
-        title={postData.posts[id].title} 
-        key={id}
-        postId={id}
-        description={postData.posts[id].description} 
-      />
-    );
+    let postCards = null;
+
+    if(!this.state.loading && this.props.titles){
+      postCards =  postData.titles.map((t) =>       
+        <PostCard 
+          title={t.title} 
+          key={t.id}
+          postId={t.id}
+          description={t.description} 
+        />
+      );
+    }
     
     return (
       <div className="PostList">
@@ -35,7 +46,7 @@ class PostList extends Component {
 }
 
 function mapStateToProps(reduxState) {
-  return { posts: reduxState.posts };
+  return { titles: reduxState.titles };
 }
 
 export default connect(mapStateToProps, { getTitlesFromApi })(PostList);
