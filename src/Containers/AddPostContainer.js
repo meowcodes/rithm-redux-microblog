@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addPost } from '../actions';
 import PostForm from '../Components/PostForm';
+import {addPostToApi} from '../actions'
 
 /**
  * Receives history from Route
@@ -45,4 +46,4 @@ function mapStateToProps() {
   return {};
 }
 
-export default connect(mapStateToProps, { addPost })(AddPostContainer);
+export default connect(mapStateToProps, { addPostToApi })(AddPostContainer);

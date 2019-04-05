@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { deletePost, addComment, deleteComment } from '../actions';
+import { getPostFromApi, editPostFromApi, deletePostFromApi } from '../actions';
 
 import EditPostContainer from './EditPostContainer';
 import Comments from '../Components/Comments';
@@ -86,9 +86,12 @@ function mapStateToProps(reduxState, {postId}) {
   }
 
 const mapDispatchToProps = {
-    deletePost,
-    addComment,
-    deleteComment
+    getPostFromApi,
+    editPostFromApi,
+    deletePostFromApi
+    // deletePost,
+    // addComment,
+    // deleteComment
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BlogPost);

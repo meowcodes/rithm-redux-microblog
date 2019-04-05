@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { editPost } from '../actions';
+import { editPostFromApi } from '../actions';
 import PostForm from '../Components/PostForm';
+
 
 /**
  * Receives postId and toggleEdit function from BlogPost
@@ -53,4 +54,4 @@ function mapStateToProps(reduxState, {postId}) {
   }
 }
 
-export default connect(mapStateToProps, { editPost })(EditPostContainer);
+export default connect(mapStateToProps, { editPostFromApi })(EditPostContainer);

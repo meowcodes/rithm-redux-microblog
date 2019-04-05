@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PostCard from '../Components/PostCard';
+import {getTitlesFromApi} from '../actions'
 
 /**
  * Recieves all posts data from Redux store
  * Renders PostCard for each post
  */
 class PostList extends Component {
+
 
   render() {
     const postData = this.props;
@@ -31,4 +33,4 @@ function mapStateToProps(reduxState) {
   return { posts: reduxState.posts };
 }
 
-export default connect(mapStateToProps)(PostList);
+export default connect(mapStateToProps, { getTitlesFromApi })(PostList);
