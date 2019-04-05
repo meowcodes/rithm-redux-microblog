@@ -143,7 +143,7 @@ export function getComments() {
  * Adds a new comment a post to API
  * Update post with new comment in Redux state
  */
-export function addCommentToAPI(postId) {
+export function addCommentToAPI(postId, text) {
 	return async function (dispatch) {
 		try {
 			const comment = await microblogApi.addComment(postId, text);
