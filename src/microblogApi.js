@@ -87,6 +87,20 @@ class microblogApi {
 
 		return res;
 	}
+
+	/** upvote post.*/
+	static async upvotePost(postId) {
+		let res = await this.request(`api/posts/${postId}/vote/up`, {}, "post");
+
+		return res;
+	}
+
+	/** downvote post.*/
+	static async downvotePost(postId) {
+		let res = await this.request(`api/posts/${postId}/vote/down`, {}, "post");
+
+		return res;
+	}
 }
 
 export default microblogApi

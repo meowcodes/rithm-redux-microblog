@@ -1,4 +1,4 @@
-import { GET_TITLES, GET_POST, ADD_POST, EDIT_POST, DELETE_POST, GET_COMMENTS, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT } from './actionTypes';
+import { GET_TITLES, GET_POST, ADD_POST, EDIT_POST, DELETE_POST, GET_COMMENTS, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, VOTE_POST } from './actionTypes';
 
 
 const INITIAL_STATE = { titles: [], posts: {} };
@@ -105,6 +105,33 @@ function rootReducer(state = INITIAL_STATE, action) {
         [action.payload.postId]: targetPostDelete}
 
       return {...state, posts: deleteCommentPosts};
+
+    case VOTE_POST:
+        // get copy of specific post (from state)
+        const downvotedPost = {...state.posts[action.payload.postId], votes: action.payload.votes}
+
+        // create new post w/ updated votes 
+
+        // make new object of all current posts
+        const downvotedPosts = {...state.posts, [action.payload.postId]: downvotedPost}
+        // make new title
+        const downvotedTitle = {
+          id: downvotedPost.id, 
+          title: downvotedPost.title,
+          description: downvotedPost.description,
+          votes: downvotedPost.votes
+        }
+
+        const downvotedTitles = state.titles.map(t => {
+          if(t.id === downvotedPost.id) {
+            return downvotedTitle;
+          } else {
+            return t;
+          }
+        })
+
+        // return updated state
+        return {titles: downvotedTitles, posts: downvotedPosts}
 
     default:
       return state;

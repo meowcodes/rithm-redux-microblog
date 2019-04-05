@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { getPostFromApi, deletePostFromApi, addCommentToApi, editCommentFromApi, deleteCommentFromApi } from '../actions';
+import { getPostFromApi, deletePostFromApi, addCommentToApi, editCommentFromApi, deleteCommentFromApi, upvotePostFromApi, downvotePostFromApi } from '../actions';
 
 import EditPostContainer from './EditPostContainer';
 import Comments from '../Components/Comments';
@@ -27,6 +27,8 @@ class BlogPost extends Component {
 		this.handleDeletePost = this.handleDeletePost.bind(this);
 		this.handleDeleteComment = this.handleDeleteComment.bind(this);
 		this.handleAddComment = this.handleAddComment.bind(this);
+		this.handleUpvote = this.handleUpvote.bind(this);
+		this.handleDownvote = this.handleDownvote.bind(this);
 	}
 
 	// checks if post in redux, if not, gets from api. updates state. handles errs
@@ -69,6 +71,14 @@ class BlogPost extends Component {
 		this.props.deleteCommentFromApi(this.props.postId, commentId);
 	}
 
+	handleUpvote() {
+		this.props.upvotePostFromApi(this.props.postId);
+	}
+
+	handleDownvote() {
+		this.props.downvotePostFromApi(this.props.postId);
+	}
+
 	render() {
 
 		const postData = this.props;
@@ -83,6 +93,9 @@ class BlogPost extends Component {
 
 			showComponents = <><h3>{postData.post.title}</h3>
 				<p><i>{postData.post.description}</i></p>
+				<p>{postData.post.votes}</p>
+				<button onClick={this.handleUpvote}>Upvote</button>
+				<button onClick={this.handleDownvote}>Downvote</button>
 				<p>{postData.post.body}</p>
 				<button onClick={this.toggleEdit}>Edit</button>
 				<button onClick={this.handleDeletePost}>Delete</button>
@@ -113,7 +126,9 @@ const mapDispatchToProps = {
 	getPostFromApi,
 	deletePostFromApi,
 	addCommentToApi,
-	deleteCommentFromApi
+	deleteCommentFromApi,
+	upvotePostFromApi,
+	downvotePostFromApi
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BlogPost);

@@ -1,5 +1,5 @@
 import microblogApi from './microblogApi';
-import { GET_TITLES, GET_POST, ADD_POST, EDIT_POST, DELETE_POST, GET_COMMENTS, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, SHOW_ERR } from './actionTypes';
+import { GET_TITLES, GET_POST, ADD_POST, EDIT_POST, DELETE_POST, GET_COMMENTS, ADD_COMMENT, EDIT_COMMENT, DELETE_COMMENT, SHOW_ERR, VOTE_POST } from './actionTypes';
 
 /** 
  * Format data to be sent to the reducer
@@ -207,6 +207,39 @@ export function deletedComment(postId, commentId) {
 	return {
 		type: DELETE_COMMENT,
 		payload: { postId, commentId }
+	}
+}
+
+export function upvotePostFromApi(postId) {
+	return async function (dispatch) {
+		try {
+			const newVote = await microblogApi.upvotePost(postId)
+
+			dispatch(votedPost(postId, newVote.votes))
+		} catch (err) {
+			const errMsg = err.response.data;
+			dispatch(showErr(errMsg));
+		}
+	}
+}
+
+
+export function downvotePostFromApi(postId) {
+	return async function (dispatch) {
+		try {
+			const newVote = await microblogApi.downvotePost(postId)
+			dispatch(votedPost(postId, newVote.votes))
+		} catch (err) {
+			const errMsg = err.response.data;
+			dispatch(showErr(errMsg));
+		}
+	}
+}
+
+function votedPost(postId, votes) {
+	return {
+		type: VOTE_POST,
+		payload: {postId, votes}
 	}
 }
 
