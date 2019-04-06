@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Comment.css'
 
 /**
  * Receives one comment from Comments
@@ -20,8 +21,8 @@ class Comment extends Component {
 
   render() {
     return (
-      <div>
-        <button onClick={this.handleClick}>X</button>
+      <div className="Comment">
+        <button onClick={this.handleClick}><i class="far fa-times-circle"></i></button>
         <p>{this.props.text}</p>
       </div>
     );

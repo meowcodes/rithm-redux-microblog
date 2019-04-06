@@ -9,9 +9,9 @@ class NavBar extends Component {
     return (
       <div className="NavBar">
         <h1>Microblog</h1>
-        <p>Get in the Rithm of blogging!</p>
-        <NavLink exact to="/">Blog</NavLink>
-        <NavLink exact to="/new">Add a new post</NavLink>
+        <p><i id="nav-description">Get in the Rithm of blogging!</i></p>
+        <NavLink className="NavLink" exact to="/">Blog</NavLink>
+        <NavLink className="NavLink" exact to="/new">Add a new post</NavLink>
       </div>
     );
   }

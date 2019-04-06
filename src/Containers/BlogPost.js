@@ -6,6 +6,7 @@ import { getPostFromApi, deletePostFromApi, addCommentToApi, editCommentFromApi,
 
 import EditPostContainer from './EditPostContainer';
 import Comments from '../Components/Comments';
+import './BlogPost.css'
 
 /**
  * Receives history and postId from Route
@@ -94,11 +95,11 @@ class BlogPost extends Component {
 			showComponents = <><h3>{postData.post.title}</h3>
 				<p><i>{postData.post.description}</i></p>
 				<p>{postData.post.votes}</p>
-				<button onClick={this.handleUpvote}>Upvote</button>
-				<button onClick={this.handleDownvote}>Downvote</button>
+				<button onClick={this.handleUpvote}><i class="fas fa-thumbs-up"></i></button>
+				<button onClick={this.handleDownvote}><i class="fas fa-thumbs-down"></i></button>
 				<p>{postData.post.body}</p>
-				<button onClick={this.toggleEdit}>Edit</button>
-				<button onClick={this.handleDeletePost}>Delete</button>
+				<button onClick={this.toggleEdit}><i class="fas fa-edit"></i></button>
+				<button onClick={this.handleDeletePost}><i class="far fa-trash-alt"></i></button>
 				<Comments comments={postData.post.comments}
 					triggerAddComment={this.handleAddComment} triggerDeleteComment={this.handleDeleteComment} /></>
 		}

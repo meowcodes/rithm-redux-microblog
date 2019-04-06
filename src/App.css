@@ -1,5 +1,31 @@
 .App {
   text-align: center;
+  font-family: 'Oswald', sans-serif;
+}
+
+* {
+  background-color: #1A1A1D;
+  color: white;
+}
+
+h1 {
+  color: #C3073F;
+  font-size: 4em;
+}
+
+.NavLink {
+  margin: 0em 1em;
+  text-decoration: none;
+  font-size: 1.5em;
+  color: rgb(165, 70, 89);
+}
+
+#nav-description {
+  color: rgb(175, 175, 177);
+}
+
+input {
+  background-color: white;
 }
 
 .App-logo {

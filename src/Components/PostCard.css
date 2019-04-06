@@ -1,5 +1,32 @@
 .PostCard {
-    border: solid 1px gainsboro;
+    border: dotted 2px #4E4E50;
+    margin: 2em auto !important;
     max-width: 350px;
     margin: 0 auto;
+    background-color: rgb(52, 52, 58);
+}
+
+.PostCard p {
+    background-color: rgb(52, 52, 58);
+}
+
+.PostCard i {
+    background-color: rgb(52, 52, 58);
+}
+
+.PostCard button {
+    background-color: rgb(52, 52, 58);
+}
+
+.PostCard:hover {
+    box-shadow: 3px 3px 5px 0px white;
+}
+
+.blog-title {
+    font-size: 1.5em;
+}
+
+button {
+    border: none;
+    margin-bottom: 1em;
 }

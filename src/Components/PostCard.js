@@ -27,11 +27,11 @@ class PostCard extends Component {
 	render() {
 		return (
 			<div className="PostCard">
-				<Link to={`/${this.props.postId}`}><p>{this.props.title}</p></Link>
+				<Link to={`/${this.props.postId}`}><p className="blog-title">{this.props.title}</p></Link>
 				<p><i>{this.props.description}</i></p>
 				<p>{this.props.votes}</p>
-				<button onClick={this.handleUpvote}>Upvote</button>
-				<button onClick={this.handleDownvote}>Downvote</button>
+				<button onClick={this.handleUpvote}><i class="fas fa-thumbs-up"></i></button>
+				<button onClick={this.handleDownvote}><i class="fas fa-thumbs-down"></i></button>
 			</div>
 		);
 	}

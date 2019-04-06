@@ -1,0 +1,14 @@
+.Comment button {
+    border: none;
+    padding: 1.2em 0em 0em 0em;
+    margin: 0em 0.5em 0em 0em;
+    font-size: 15px;
+    height: 1em;
+    width: 1em;
+}
+
+
+.Comment {
+    display: flex;
+    justify-content: center;
+}
