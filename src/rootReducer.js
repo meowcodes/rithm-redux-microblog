@@ -108,30 +108,32 @@ function rootReducer(state = INITIAL_STATE, action) {
 
     case VOTE_POST:
         // get copy of specific post (from state)
-        const downvotedPost = {...state.posts[action.payload.postId], votes: action.payload.votes}
+        const votedPost = {...state.posts[action.payload.postId], votes: action.payload.votes}
+
+        const targVotedTitle = state.titles.filter(t => t.id === action.payload.postId)[0];
 
         // create new post w/ updated votes 
 
         // make new object of all current posts
-        const downvotedPosts = {...state.posts, [action.payload.postId]: downvotedPost}
+        const votedPosts = {...state.posts, [action.payload.postId]: votedPost}
         // make new title
-        const downvotedTitle = {
-          id: downvotedPost.id, 
-          title: downvotedPost.title,
-          description: downvotedPost.description,
-          votes: downvotedPost.votes
+        const votedTitle = {
+          id: votedPost.id || targVotedTitle.id, 
+          title: votedPost.title || targVotedTitle.title,
+          description: votedPost.description || targVotedTitle.description,
+          votes: votedPost.votes || targVotedTitle.votes
         }
 
-        const downvotedTitles = state.titles.map(t => {
-          if(t.id === downvotedPost.id) {
-            return downvotedTitle;
+        const votedTitles = state.titles.map(t => {
+          if(t.id === votedTitle.id) {
+            return votedTitle;
           } else {
             return t;
           }
         })
 
         // return updated state
-        return {titles: downvotedTitles, posts: downvotedPosts}
+        return {titles: votedTitles, posts: votedPosts}
 
     default:
       return state;

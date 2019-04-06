@@ -15,6 +15,7 @@ class PostCard extends Component {
 	}
 
 	handleUpvote() {
+		
 		this.props.triggerUpvote(this.props.postId);
 	}
 
