@@ -92,9 +92,9 @@ class BlogPost extends Component {
 				postId={postData.postId}
 				edit={true} />
 
-			showComponents = <><h3>{postData.post.title}</h3>
-				<p><i>{postData.post.description}</i></p>
-				<p>{postData.post.votes}</p>
+			showComponents = <><h3 id="post-title">{postData.post.title}</h3>
+				<p id="post-desc"><i>{postData.post.description}</i></p>
+				<p>Upvotes: {postData.post.votes}</p>
 				<button onClick={this.handleUpvote}><i class="fas fa-thumbs-up"></i></button>
 				<button onClick={this.handleDownvote}><i class="fas fa-thumbs-down"></i></button>
 				<p>{postData.post.body}</p>

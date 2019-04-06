@@ -42,7 +42,7 @@ class CommentForm extends Component {
 						name="text"
 						onChange={this.handleChange}
 					></input>
-					<button>Add Comment</button>
+					<button>Add</button>
 				</form>
 			</div>
 		);

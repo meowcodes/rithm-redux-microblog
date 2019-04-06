@@ -4,3 +4,22 @@
 }
 
 
+#post-title {
+    font-size: 3.2em;
+    letter-spacing: 0.1em;
+    text-decoration: underline dotted rgba(255, 255, 255, 0.596);
+    font-weight: bolder;
+    text-shadow:
+    1.5px 1.5px rgb(17, 17, 17),
+    1.5px -1.5px rgb(17, 17, 17),
+    -1.5px 1.5px rgb(17, 17, 17),
+    -1.5px -1.5px rgb(17, 17, 17);
+    margin: 0.3em auto;
+    color: rgb(175, 166, 166)
+}
+
+
+#post-desc {
+    font-size: 1.5em;
+    margin-top: 0em;
+}

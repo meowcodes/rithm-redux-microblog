@@ -22,8 +22,8 @@ class Comment extends Component {
   render() {
     return (
       <div className="Comment">
-        <button onClick={this.handleClick}><i class="far fa-times-circle"></i></button>
         <p>{this.props.text}</p>
+        <button onClick={this.handleClick}><i class="far fa-times-circle"></i></button>
       </div>
     );
   }

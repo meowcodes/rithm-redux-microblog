@@ -11,6 +11,7 @@ import CommentForm from './CommentForm'
 class Comments extends Component {
 
   render() {
+    
     const comments = this.props.comments.map((c) => <Comment
       key={c.id}
       id={c.id}

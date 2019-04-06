@@ -24,6 +24,11 @@
 
 .blog-title {
     font-size: 1.5em;
+    color: #ac7188;
+}
+
+a {
+    text-decoration: none;
 }
 
 button {
