@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PostCard from '../Components/PostCard';
-import {getTitlesFromApi} from '../actions'
+import {getTitlesFromApi, upvotePostFromApi, downvotePostFromApi} from '../actions'
 
 /**
  * Recieves all posts data from Redux store
@@ -14,6 +14,8 @@ class PostList extends Component {
       loading: true,
       error: false
     }
+    this.handleUpvote = this.handleUpvote.bind(this);
+		this.handleDownvote = this.handleDownvote.bind(this);
   }
 
   // on first load, get titles from API.
@@ -25,6 +27,15 @@ class PostList extends Component {
       this.setState({error: err})
     }
   }
+
+
+	handleUpvote(postId) {
+		this.props.upvotePostFromApi(postId);
+	}
+
+	handleDownvote(postId) {
+	  this.props.downvotePostFromApi(postId);
+	}
 
 
   render() {
@@ -39,6 +50,9 @@ class PostList extends Component {
           key={t.id}
           postId={t.id}
           description={t.description} 
+          votes={t.votes}
+          triggerUpvote={this.handleUpvote}
+          triggerDownvote={this.handleDownvote}
         />
       );
     }
@@ -55,4 +69,10 @@ function mapStateToProps(reduxState) {
   return { titles: reduxState.titles };
 }
 
-export default connect(mapStateToProps, { getTitlesFromApi })(PostList);
+const mapDispatchToProps = {
+	getTitlesFromApi,
+	upvotePostFromApi,
+	downvotePostFromApi
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostList);
